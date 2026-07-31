@@ -46,7 +46,7 @@ transform = transforms.Compose([
 
 @app.route('/')
 def index():
-    return send_file('Deepfake_Detection_Interactive_Demo.html')
+    return send_file(os.path.join(os.path.dirname(__file__), 'index.html'))
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
@@ -60,7 +60,7 @@ def analyze():
         return jsonify({"error": "No image data provided"}), 400
 
     base64_str = data['image']
-    if base64_str.startswith('data:image'):
+    if ',' in base64_str:
         base64_str = base64_str.split(',')[1]
 
     try:
